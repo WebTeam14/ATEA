@@ -9,6 +9,7 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
+    "homepage": "https://github.com/WebTeam14/ATEA.git"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
