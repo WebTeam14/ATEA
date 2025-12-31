@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,10 +16,45 @@ const Contact = () => {
     message: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Thank you for your enquiry! We will contact you soon.");
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    setLoading(true);
+
+    // TODO: Replace these with your actual EmailJS credentials
+    // Sign up at https://www.emailjs.com/
+    const SERVICE_ID = "YOUR_SERVICE_ID";
+    const TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+    const PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+
+    if (SERVICE_ID === "YOUR_SERVICE_ID") {
+      toast.error("Please configure EmailJS credentials in Contact.tsx");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone_number: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+          to_name: "ATEA Team", // Optional: customize as needed
+        },
+        PUBLIC_KEY
+      );
+
+      toast.success("Thank you for your enquiry! We will contact you soon.");
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    } catch (error) {
+      console.error("Email API Error:", error);
+      toast.error("Failed to send message. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -36,7 +73,7 @@ const Contact = () => {
             <h3 className="font-poppins text-2xl font-semibold text-foreground mb-8">
               Get In Touch
             </h3>
-            
+
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -97,10 +134,11 @@ const Contact = () => {
             <h3 className="font-poppins text-2xl font-semibold text-foreground mb-6">
               Enquiry Form
             </h3>
-            
+
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
                 <Input
+                  name="user_name"
                   placeholder="Your Name *"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -108,6 +146,7 @@ const Contact = () => {
                   className="bg-muted border-border"
                 />
                 <Input
+                  name="user_email"
                   type="email"
                   placeholder="Your Email *"
                   value={formData.email}
@@ -116,23 +155,26 @@ const Contact = () => {
                   className="bg-muted border-border"
                 />
               </div>
-              
+
               <div className="grid md:grid-cols-2 gap-4">
                 <Input
+                  name="phone"
                   placeholder="Phone Number"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="bg-muted border-border"
                 />
                 <Input
+                  name="subject"
                   placeholder="Subject"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   className="bg-muted border-border"
                 />
               </div>
-              
+
               <Textarea
+                name="message"
                 placeholder="Your Message *"
                 rows={5}
                 value={formData.message}
@@ -140,10 +182,19 @@ const Contact = () => {
                 required
                 className="bg-muted border-border resize-none"
               />
-              
-              <Button type="submit" className="btn-primary w-full rounded-md">
-                <Send className="w-4 h-4 mr-2" />
-                Send Message
+
+              <Button type="submit" className="btn-primary w-full rounded-md" disabled={loading}>
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4 mr-2" />
+                    Send Message
+                  </>
+                )}
               </Button>
             </form>
           </div>

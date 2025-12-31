@@ -40,13 +40,17 @@ export default function AboutUs() {
               <span className="text-primary block">ABOUT US</span>
             </h2>
             <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-              We are dedicated to delivering innovative engineering solutions that drive business growth 
-              and technological advancement. Our team of experienced professionals works collaboratively 
-              with clients to understand their unique challenges and provide tailored solutions.
+              Established in 2025, going to provide high-tech services and material testing to MSMEs in Taloja. 
+              It supports the automobile, Infrastructure and real estate  sector with advanced machinery services 
+              and includes a training center for industrial skills, supplying skilled manpower to the industry. 
+              Located in the significant industrial hub of Taloja Midc, the cluster is dedicated to 
+              enhancing MSME productivity, competitiveness, and capacity building. 
+              Managed by Taloja Engineering Cluster
             </p>
             <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-              With a commitment to excellence and continuous improvement, we have established ourselves 
-              as a trusted partner in the engineering and consulting industry.
+              It aims to improve performance of small scale industries in the Engineering , Auto, 
+              Infrastructure and real estate sectors through service support of high-end machining and 
+              skill development initiatives. It helps in high tech fabrication and metal protective services.  
             </p>
             <ul className="space-y-2">
               <li className="flex items-center text-foreground">
