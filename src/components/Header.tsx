@@ -36,7 +36,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img src="src/assets/ATEA-logo.jpeg" alt="Engineering Cluster Pune" className="h-16 md:h-24 lg:h-28 flex-shrink-0" />
+            <img src="/src/assets/ATEA-logo.jpeg" alt="Engineering Cluster Pune" className="h-16 md:h-24 lg:h-28 flex-shrink-0" />
           </Link>
 
           {/* Desktop Menu */}
